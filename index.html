@@ -12,7 +12,8 @@
     :root {
       --bg: #0a0a0a;
       --fg: #e5e5e5;
-      --accent: #00ffff;
+      --accent: #38bdf8;
+      --accent-hover: #0ea5e9;
       --muted: #777;
     }
 
@@ -20,6 +21,10 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -37,7 +42,7 @@
     }
 
     header {
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -47,13 +52,13 @@
     }
 
     header h1 {
-      font-size: 4rem;
+      font-size: 3rem;
       font-weight: 700;
     }
 
     header p {
       margin-top: 1rem;
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       color: var(--muted);
     }
 
@@ -68,29 +73,46 @@
     }
 
     h2 {
-      font-size: 2.25rem;
+      font-size: 2rem;
       margin-bottom: 1.5rem;
       color: var(--accent);
     }
 
     .skills {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 1rem;
+      background-color: #1a1a1a;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
     }
 
-    .badge {
-      background-color: #1c1c1c;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      text-align: center;
+    .skill {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .skill label {
       font-weight: 600;
-      font-size: 1rem;
-      color: white;
+      margin-bottom: 0.25rem;
     }
 
-    .good { background-color: #059669; }
-    .decent { background-color: #d97706; }
+    .progress {
+      background-color: #1c1c1c;
+      border-radius: 8px;
+      height: 1rem;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: var(--accent);
+      width: 0%;
+      border-radius: 8px;
+      transition: width 0.6s ease;
+    }
 
     .contact {
       text-align: center;
@@ -109,7 +131,7 @@
     }
 
     .contact a:hover {
-      background-color: #00cccc;
+      background-color: var(--accent-hover);
     }
 
     footer {
@@ -118,6 +140,34 @@
       color: var(--muted);
       font-size: 0.9rem;
     }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.25rem;
+      }
+
+      header p {
+        font-size: 1rem;
+      }
+
+      h2 {
+        font-size: 1.75rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      header p {
+        font-size: 0.95rem;
+      }
+
+      .skills {
+        padding: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -125,26 +175,47 @@
 
   <header>
     <h1>Wilco van den Heuvel</h1>
-    <p>Creative developer focused on web, UI, and clean aesthetics</p>
+    <p>Developer met passie voor web en software</p>
   </header>
 
   <main>
     <section>
-      <h2>Skills</h2>
+      <h2>Talen die ik beheers</h2>
       <div class="skills">
-        <span class="badge good">HTML</span>
-        <span class="badge good">CSS</span>
-        <span class="badge good">JavaScript</span>
-        <span class="badge good">C#</span>
-        <span class="badge decent">Python</span>
-        <span class="badge decent">XAML</span>
-        <span class="badge decent">Ubuntu</span>
+        <div class="skill">
+          <label>HTML (goed)</label>
+          <div class="progress"><div class="progress-fill" style="width: 95%"></div></div>
+        </div>
+        <div class="skill">
+          <label>CSS (goed)</label>
+          <div class="progress"><div class="progress-fill" style="width: 90%"></div></div>
+        </div>
+        <div class="skill">
+          <label>JavaScript (goed)</label>
+          <div class="progress"><div class="progress-fill" style="width: 85%"></div></div>
+        </div>
+        <div class="skill">
+          <label>C# (goed)</label>
+          <div class="progress"><div class="progress-fill" style="width: 80%"></div></div>
+        </div>
+        <div class="skill">
+          <label>Python (redelijk)</label>
+          <div class="progress"><div class="progress-fill" style="width: 65%"></div></div>
+        </div>
+        <div class="skill">
+          <label>XAML (redelijk)</label>
+          <div class="progress"><div class="progress-fill" style="width: 60%"></div></div>
+        </div>
+        <div class="skill">
+          <label>Ubuntu/Linux (redelijk)</label>
+          <div class="progress"><div class="progress-fill" style="width: 70%"></div></div>
+        </div>
       </div>
     </section>
 
     <section class="contact">
       <h2>Contact</h2>
-      <p>Interesse in samenwerking of vragen? Stuur me een bericht!</p>
+      <p>Wil je samenwerken of gewoon hallo zeggen? Stuur me gerust een berichtje!</p>
       <a href="mailto:wilco@example.com">Mail Wilco</a>
     </section>
   </main>
@@ -161,7 +232,7 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
-    const material = new THREE.MeshStandardMaterial({ color: 0x00ffff, metalness: 0.7, roughness: 0.2 });
+    const material = new THREE.MeshStandardMaterial({ color: 0x38bdf8, metalness: 0.7, roughness: 0.2 });
     const knot = new THREE.Mesh(geometry, material);
     scene.add(knot);
 
