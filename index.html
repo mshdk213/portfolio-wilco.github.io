@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wilco van den Heuvel - Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.min.js"></script>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --fg: #e5e5e5;
+      --accent: #00ffff;
+      --muted: #777;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+    }
+
+    canvas.bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    header {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    header h1 {
+      font-size: 4rem;
+      font-weight: 700;
+    }
+
+    header p {
+      margin-top: 1rem;
+      font-size: 1.25rem;
+      color: var(--muted);
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    section {
+      margin-bottom: 4rem;
+    }
+
+    h2 {
+      font-size: 2.25rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+    }
+
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+    }
+
+    .badge {
+      background-color: #1c1c1c;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1rem;
+      color: white;
+    }
+
+    .good { background-color: #059669; }
+    .decent { background-color: #d97706; }
+
+    .contact {
+      text-align: center;
+    }
+
+    .contact a {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.75rem 2rem;
+      background-color: var(--accent);
+      color: black;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+
+    .contact a:hover {
+      background-color: #00cccc;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <canvas class="bg"></canvas>
+
+  <header>
+    <h1>Wilco van den Heuvel</h1>
+    <p>Creative developer focused on web, UI, and clean aesthetics</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Skills</h2>
+      <div class="skills">
+        <span class="badge good">HTML</span>
+        <span class="badge good">CSS</span>
+        <span class="badge good">JavaScript</span>
+        <span class="badge good">C#</span>
+        <span class="badge decent">Python</span>
+        <span class="badge decent">XAML</span>
+        <span class="badge decent">Ubuntu</span>
+      </div>
+    </section>
+
+    <section class="contact">
+      <h2>Contact</h2>
+      <p>Interesse in samenwerking of vragen? Stuur me een bericht!</p>
+      <a href="mailto:wilco@example.com">Mail Wilco</a>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Wilco van den Heuvel — Alle rechten voorbehouden.
+  </footer>
+
+  <!-- Three.js Background -->
+  <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, canvas: document.querySelector('canvas.bg') });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
+    const material = new THREE.MeshStandardMaterial({ color: 0x00ffff, metalness: 0.7, roughness: 0.2 });
+    const knot = new THREE.Mesh(geometry, material);
+    scene.add(knot);
+
+    const light = new THREE.PointLight(0xffffff, 1);
+    light.position.set(30, 30, 30);
+    scene.add(light);
+
+    camera.position.z = 40;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      knot.rotation.x += 0.002;
+      knot.rotation.y += 0.004;
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
